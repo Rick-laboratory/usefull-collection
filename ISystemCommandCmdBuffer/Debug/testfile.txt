@@ -1,0 +1,13 @@
+ Datentr„ger in Laufwerk G: ist ESD-USB
+ Volumeseriennummer: 2092-65D3
+
+ Verzeichnis von G:\Neuer Ordner (2)\ISystemCommandCmdBuffer\Debug
+
+25.02.2021  16:01    <DIR>          .
+25.02.2021  16:01    <DIR>          ..
+10.03.2021  12:00           128.000 SystemCommandOutputBuffer.exe
+10.03.2021  12:00           956.220 SystemCommandOutputBuffer.ilk
+10.03.2021  12:00           954.368 SystemCommandOutputBuffer.pdb
+10.03.2021  12:01                41 testfile.txt
+               4 Datei(en),      2.038.629 Bytes
+               2 Verzeichnis(se),  6.860.275.712 Bytes frei

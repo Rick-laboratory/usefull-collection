@@ -1,0 +1,44 @@
+#include <iostream>
+#include <X11/Xlib.h>
+#include <unistd.h>
+#include <assert.h>
+#include <stdio.h>
+#include <malloc.h>
+
+int main(int argc, char *argv[])
+{
+	Display* dpy = XOpenDisplay(0);
+	int scr = XDefaultScreen(dpy);
+	Window root_window = XRootWindow(dpy, scr);
+
+	int height = DisplayHeight(dpy, scr);
+	int width  = DisplayWidth(dpy, scr);
+	std::cout << "Screen size : " << width << "x" << height << std::endl;
+	int winx, winy, rootx, prevrootx,prevrooty,  rooty = 0;
+	unsigned int mask = 0;
+	Window childwin, rootwin;
+	
+	float m = (float)height / (float)width;
+
+//	int j;
+//	for (int i = 0; i < width; i++) {
+//		j = m*i;
+//		XWarpPointer(dpy, None, root_window, 0, 0, 0, 0, i, j);
+//		XQueryPointer(dpy, XRootWindow(dpy, scr), &childwin, &rootwin, &rootx, &rooty, &winx, &winy, &mask);
+//		std::cout << "root_x:" << rootx << "\n" << "root_y:" << rooty << "\n";
+//		std::cout << "win_x:" << rootx << "\n" << "win_y:" << rooty << "\n";
+//		XFlush(dpy);
+//		//usleep(100);
+//		i == 500 ? i = 0 : NULL;
+//	}
+	while (true)
+	{
+		XQueryPointer(dpy, XRootWindow(dpy, scr), &childwin, &rootwin, &rootx, &rooty, &winx, &winy, &mask);
+
+			std::cout << "root_x:" << rootx << "\n" << "root_y:" << rooty << "\n";
+			std::cout << "win_x:" << rootx << "\n" << "win_y:" << rooty << "\n";
+
+		
+	}
+	
+}

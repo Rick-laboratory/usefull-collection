@@ -1,0 +1,16 @@
+ Datentr„ger in Laufwerk G: ist ESD-USB
+ Volumeseriennummer: 2092-65D3
+
+ Verzeichnis von G:\Neuer Ordner (2)\ISystemCommandCmdBuffer\ISystemCommandCmdBuffer
+
+25.02.2021  16:01    <DIR>          .
+25.02.2021  16:01    <DIR>          ..
+07.01.2021  13:47             7.512 ISystemCommandCmdBuffer.vcxproj
+07.01.2021  13:47             1.390 ISystemCommandCmdBuffer.vcxproj.filters
+10.03.2021  11:55               225 ISystemCommandCmdBuffer.vcxproj.user
+07.01.2021  15:29    <DIR>          Debug
+07.01.2021  13:51    <DIR>          Headers
+07.01.2021  15:28    <DIR>          Sources
+10.03.2021  12:00                41 testfile.txt
+               4 Datei(en),          9.168 Bytes
+               5 Verzeichnis(se),  6.860.283.904 Bytes frei

@@ -1,0 +1,4 @@
+﻿  Quelle.cpp
+C:\Users\Rick Desktop\source\repos\Project3\Project3\Quelle.cpp(2,33): warning C4081: "newline" erwartet; "." gefunden
+C:\Users\Rick Desktop\source\repos\Project3\Project3\Quelle.cpp(4,1): warning C4326: Der Rückgabetyp von "main" sollte "int" und nicht "void" sein
+  Project3.vcxproj -> C:\Users\Rick Desktop\source\repos\Project3\Debug\Project3.exe
