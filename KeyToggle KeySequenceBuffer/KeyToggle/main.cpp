@@ -1,58 +1,53 @@
 #include "Key_Operator.h"
+#include <array>
 #include <iostream>
-#include <vector>
-enum class AppState { RECORD, INACTIVE, EXIT };
-AppState appState = AppState::RECORD;
-Key_Operator CONTROL(0x11), R(0x52), I(0x49);
-std::vector<int> keySequenceBuffer;
-void EvaluateSequence(std::vector<int>keySequenceBuffer) {
-	if (keySequenceBuffer[0] = 0x11 && keySequenceBuffer[1] == 0x52 && keySequenceBuffer[2] == 0x49) {
-		std::cout << "CTRL + R + I has been Pressed\n";
-		keySequenceBuffer.clear();
-	}
-}
-bool shift = false;
-int main(void) {
-	while (appState == AppState::RECORD)
-	{
-		if (CONTROL) {
-			std::cout << "CTRL has been Pressed\n" ;
-			std::cout << keySequenceBuffer.size() << "\n";
-			keySequenceBuffer.push_back(0x11);
-			if (keySequenceBuffer.size() == 3) {
-				EvaluateSequence(keySequenceBuffer);
-				keySequenceBuffer.clear();
-			}
-		}
-		if (R)
-		{
-			std::cout << "R has been Pressed\n";
-			std::cout << keySequenceBuffer.size() << "\n";
-			keySequenceBuffer.push_back(0x52);
-			if (keySequenceBuffer.size() == 3) {
-				EvaluateSequence(keySequenceBuffer);
-				keySequenceBuffer.clear();
-			}
-		}
-		if (I)
-		{
-			std::cout << "I has been Pressed\n";
-			std::cout << keySequenceBuffer.size() << "\n";
-			keySequenceBuffer.push_back(0x49);
-			if (keySequenceBuffer.size() == 3) {
-				EvaluateSequence(keySequenceBuffer);
-				keySequenceBuffer.clear();
-			}
-		}
-		if (GetAsyncKeyState(192) < 0 && shift == false)
-		{
-			std::cout << "pressed\n";
-			shift = true;
-		}
-		if (GetAsyncKeyState(192) == 0 && shift == true)
-		{
-			std::cout << "released\n";
-			shift = false;
-		}
-	}
+#include <string_view>
+
+class KeySequence
+{
+  public:
+    bool Press(int key)
+    {
+        constexpr std::array<int, 3> expected{VK_CONTROL, 'R', 'I'};
+        if (key == expected[next_])
+            ++next_;
+        else
+            next_ = key == expected[0] ? 1 : 0;
+        if (next_ != expected.size())
+            return false;
+        next_ = 0;
+        return true;
+    }
+
+  private:
+    std::size_t next_ = 0;
+};
+int main(int argc, char *argv[])
+{
+    const std::string_view mode = argc == 2 ? argv[1] : "";
+    if (mode == "--self-test")
+    {
+        KeySequence sequence;
+        if (sequence.Press('R') || sequence.Press('I') || sequence.Press(VK_CONTROL) || sequence.Press('R') ||
+            !sequence.Press('I') || sequence.Press('I'))
+            return 1;
+        std::cout << "Sequence checks passed\n";
+        return 0;
+    }
+    if (mode != "--watch")
+    {
+        std::cout << "key-sequence --watch\nDetects Ctrl, R, I press edges in that order. Escape stops.\n";
+        return argc == 1 || mode == "--help" ? 0 : 2;
+    }
+    std::array<Key_Operator, 3> keys{Key_Operator(VK_CONTROL), Key_Operator('R'), Key_Operator('I')};
+    constexpr std::array<int, 3> codes{VK_CONTROL, 'R', 'I'};
+    KeySequence sequence;
+    while (!(GetAsyncKeyState(VK_ESCAPE) & 0x8000))
+    {
+        for (std::size_t i = 0; i < keys.size(); ++i)
+            if (keys[i] && sequence.Press(codes[i]))
+                std::cout << "Ctrl -> R -> I\n";
+        Sleep(8);
+    }
+    return 0;
 }

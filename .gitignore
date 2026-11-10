@@ -1,0 +1,17 @@
+**/Debug/
+**/Release/
+**/x64/
+**/.vs/
+/build*/
+*.user
+*.sdf
+*.opensdf
+*.ipch
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.tlog
+*.log
+*.lastbuildstate
+*.exe

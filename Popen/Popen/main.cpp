@@ -1,33 +1,22 @@
-/* POPEN.C: This program uses _popen and _pclose to receive a
- * stream of text from a system process.
- */
+#include <cstdio>
 
-#include <stdio.h>
-#include <stdlib.h>
-
-void main(void)
+int main()
 {
-
-    char   psBuffer[128];
-    FILE* chkdsk;
-
-    /* Run DIR so that it writes its output to a pipe. Open this
-       * pipe with read text attribute so that we can read it
-     * like a text file.
-       */
-    if ((chkdsk = _popen("dir", "rt")) == NULL)
-        exit(1);
-
-    /* Read pipe until end of file. End of file indicates that
-     * CHKDSK closed its standard out (probably meaning it
-   * terminated).
-     */
-    while (!feof(chkdsk))
+    FILE *pipe = _popen("echo Pipe capture demo", "rt");
+    if (!pipe)
     {
-        if (fgets(psBuffer, 128, chkdsk) != NULL)
-            printf(psBuffer);
+        std::perror("_popen");
+        return 1;
     }
-
-    /* Close pipe and print return value of CHKDSK. */
-    printf("\nProcess returned %d\n", _pclose(chkdsk));
+    char buffer[256]{};
+    while (std::fgets(buffer, sizeof(buffer), pipe))
+        std::fputs(buffer, stdout); // Captured bytes are data, never a printf format string.
+    const bool readFailed = std::ferror(pipe) != 0;
+    const int status = _pclose(pipe);
+    if (readFailed || status != 0)
+    {
+        std::fprintf(stderr, "Command/read failed (status %d).\n", status);
+        return 1;
+    }
+    return 0;
 }

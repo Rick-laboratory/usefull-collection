@@ -1,8 +1,12 @@
 #pragma once
-#include<string>
-class ISystemCommandOutputBuffer {
-public:
-	virtual void BufferCommandOutput() = 0;
-	virtual void CreateTempCommandOutputFile(const std::string systemcommand, const std::string filename) = 0;
-	virtual void DeleteTempCommandOutputFile() = 0;
+#include <string>
+
+class ISystemCommandOutputBuffer
+{
+  public:
+    virtual ~ISystemCommandOutputBuffer() = default;
+    virtual void BufferCommandOutput() = 0;
+    // command is trusted shell code; filename is an ordinary path and is never inserted into it.
+    virtual void CreateTempCommandOutputFile(std::string command, std::string filename) = 0;
+    virtual void DeleteTempCommandOutputFile() = 0;
 };

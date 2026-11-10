@@ -1,13 +1,15 @@
-#include "stdio.h"
-#pragma warning(disable : 4996) .
+#include <cstdio>
+
 int main()
 {
-	char sentence[] = "Rudolph is 12 years old";
-	char str[20];
-	int i;
-
-	sscanf(sentence, "%s %*s %d", str, &i);
-	printf("%s -> %d\n", str, i);
-
-	return 0;
+    const char sentence[] = "Rudolph is 12 years old";
+    char name[20]{};
+    int age = 0;
+    if (std::sscanf(sentence, "%19s %*s %d", name, &age) != 2)
+    {
+        std::fputs("Could not parse the demonstration sentence.\n", stderr);
+        return 1;
+    }
+    std::printf("%s -> %d\n", name, age);
+    return 0;
 }
